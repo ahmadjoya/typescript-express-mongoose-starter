@@ -1,11 +1,10 @@
 {
   "name": "typescript-express-mongoose-starter",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "private": false,
   "description": "TypeScript + Express + Mongoose + MongoDB",
   "license": "ISC",
   "author": "Ahmad Joya",
-  "main": "./bin/cli.js",
   "bin": {
     "typescript-express-mongoose-starter": "./bin/cli.js"
   },
@@ -18,8 +17,7 @@
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
     "deploy:prod": "npm run build && pm2 start ecosystem.config.js --only prod",
-    "deploy:dev": "pm2 start ecosystem.config.js --only dev",
-    "postinstall": "npx husky install"
+    "deploy:dev": "pm2 start ecosystem.config.js --only dev"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
