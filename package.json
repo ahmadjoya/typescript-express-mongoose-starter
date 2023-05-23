@@ -1,9 +1,11 @@
 {
-  "name": "ts-express-mongoose-starter",
-  "version": "0.0.0",
-  "description": "TypeScript + Mongoose + MongoDB + Express API Server",
-  "author": "",
+  "name": "typescript-express-mongoose-starter",
+  "version": "1.0.3",
+  "private": false,
+  "description": "TypeScript + Express + Mongoose + MongoDB",
   "license": "ISC",
+  "author": "Ahmad Joya",
+  "bin": "./bin/cli.js",
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
@@ -13,7 +15,8 @@
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
     "deploy:prod": "npm run build && pm2 start ecosystem.config.js --only prod",
-    "deploy:dev": "pm2 start ecosystem.config.js --only dev"
+    "deploy:dev": "pm2 start ecosystem.config.js --only dev",
+    "postinstall": "npx husky install"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -36,8 +39,6 @@
     "winston-daily-rotate-file": "^4.7.1"
   },
   "devDependencies": {
-    "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.2.220",
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.2",
     "@types/cookie-parser": "^1.4.3",
@@ -72,5 +73,25 @@
     "tsc-alias": "^1.7.0",
     "tsconfig-paths": "^4.0.0",
     "typescript": "^4.7.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmadjoya/typescript-express-mongoose-starter.git"
+  },
+  "keywords": [
+    "TypeScript",
+    "Express",
+    "ExpressJS",
+    "express.js",
+    "mongoose",
+    "typescript express",
+    "typescript express mongoose",
+    "starter",
+    "typescript express mongooses tarter",
+    "typescript-express-mongooses-tarter"
+  ],
+  "bugs": {
+    "url": "https://github.com/ahmadjoya/typescript-express-mongoose-starter/issues"
+  },
+  "homepage": "https://github.com/ahmadjoya/typescript-express-mongoose-starter#readme"
 }
