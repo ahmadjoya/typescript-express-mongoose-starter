@@ -33,4 +33,6 @@ const installedDeps = runCommand(installDepsCommand);
 if (!installedDeps) process.exit(-1);
 
 console.log(`Congratulations! You are ready. Follow the following command to start:`);
-console.log(`cd ${repoName} && npm start`);
+console.log(`cd ${repoName}`);
+console.log(`Now Please add your database credentials in .env.development.local`);
+console.log(`Finally, npm run dev or npm start`);
