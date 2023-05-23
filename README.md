@@ -58,14 +58,15 @@ A boilerplate project for building RESTful APIs using Express, TypeScript, and M
 
 ## ⚒ How to Install
 
-Before you start, make sure you meet the following requirements:
 
-- [Node.js](https://nodejs.org) (version 14 or higher)
-- [Yarn](https://yarnpkg.com) (version 1.22 or higher)
+To create a new project using this starter template, you can use `npx` to quickly scaffold the project. if you don't write the project name yourself, default name typescript-express-mongoose-starter will be used.
 
-Now, clone the repository and install the dependencies:
+```bash
+npx typescript-express-mongoose-starter <project-name>
+```
+Alternatively, you can clone the repository and install the dependencies:
 
 ```bash
 $ git clone https://github.com/ahmadjoya/typescript-express-mongoose-starter.git
 $ cd typescript-express-mongoose-starter
-$ yarn install
+$ npm install
