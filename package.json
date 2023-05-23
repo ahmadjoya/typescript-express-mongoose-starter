@@ -1,12 +1,14 @@
 {
   "name": "typescript-express-mongoose-starter",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "private": false,
   "description": "TypeScript + Express + Mongoose + MongoDB",
   "license": "ISC",
   "author": "Ahmad Joya",
   "main": "./bin/cli.js",
-  "bin": "./bin/cli.js",
+  "bin": {
+    "typescript-express-mongoose-starter": "./bin/cli.js"
+  },
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
@@ -74,6 +76,11 @@
     "tsc-alias": "^1.7.0",
     "tsconfig-paths": "^4.0.0",
     "typescript": "^4.7.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "repository": {
     "type": "git",
