@@ -18,7 +18,9 @@ const runCommand = command => {
   }
 };
 
-const repoName = process.argv[2];
+const defaultRepoName = 'typescript-express-mongoose-starter';
+const repoName = process.argv[2] || defaultRepoName;
+
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/ahmadjoya/typescript-express-mongoose-starter ${repoName}`;
 const installDepsCommand = `cd ${repoName} && npm install`;
 
