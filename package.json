@@ -1,6 +1,6 @@
 {
   "name": "typescript-express-mongoose-starter",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "private": false,
   "description": "TypeScript + Express + Mongoose + MongoDB",
   "license": "ISC",
@@ -96,6 +96,7 @@
     "typescript express",
     "typescript express mongoose",
     "starter",
+    "boilerplate",
     "typescript express mongooses tarter",
     "typescript-express-mongooses-tarter"
   ],

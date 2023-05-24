@@ -93,6 +93,13 @@ Before starting the project, make sure to set up your database credentials in th
 - **DB_PORT=** 27017
 - **DB_DATABASE=** dev
 
+## ⭐️ Stargazers
+
+[![Stargazers repo roster for @ahmdjoya/typescript-express-mongoose-starter](https://reporoster.com/stars/ahmadjoya/typescript-express-mongoose-starter)](https://github.com/ahmadjoya/typescript-express-mongoose-starter/stargazers)
+
+## 🍴 Forkers
+
+[![Forkers repo roster for @ahmadjoya/typescript-express-mongoose-starter](https://reporoster.com/forks/ahmadjoya/typescript-express-mongoose-starter)](https://github.com/ahmadjoya/typescript-express-mongoose-starter/network/members)
 ## Contributions
 
 Contributions, bug reports, and feature requests are always welcome! If you encounter any issues or have ideas to improve the starter template, please feel free to open an issue or submit a pull request on the [GitHub repository](https://github.com/ahmadjoya/typescript-express-mongoose-starter).
