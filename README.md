@@ -76,7 +76,7 @@ The TypeScript Express Mongoose Starter is a comprehensive boilerplate for build
 To create a new project using this starter template, you can use `npx` to quickly scaffold the project. if you don't write the project name yourself, default name typescript-express-mongoose-starter will be used.
 
 ```bash
-npx typescript-express-mongoose-starter <project-name>
+$ npx typescript-express-mongoose-starter <project-name>
 ```
 Alternatively, you can clone the repository and install the dependencies:
 
