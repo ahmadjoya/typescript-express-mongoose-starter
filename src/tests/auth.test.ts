@@ -7,6 +7,8 @@ import AuthRoute from '@routes/auth.route';
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
+  jest.setTimeout(10000);
+  jest.restoreAllMocks();
 });
 
 describe('Testing Auth', () => {

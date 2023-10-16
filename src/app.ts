@@ -44,12 +44,17 @@ class App {
     return this.app;
   }
 
-  private connectToDatabase() {
+  private async connectToDatabase() {
     if (this.env !== 'production') {
       set('debug', true);
     }
 
-    connect(dbConnection.url, dbConnection.options);
+    try {
+      await connect(dbConnection.url);
+      console.log('Connected to MongoDB');
+    } catch (error) {
+      console.error('Error connecting to MongoDB:', error);
+    }
   }
 
   private initializeMiddlewares() {
