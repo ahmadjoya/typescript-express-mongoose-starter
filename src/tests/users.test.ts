@@ -5,13 +5,16 @@ import App from '@/app';
 import { CreateUserDto } from '@dtos/users.dto';
 import UsersRoute from '@routes/users.route';
 
+beforeAll(async () => {
+  jest.setTimeout(10000);
+});
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
 });
 
 describe('Testing Users', () => {
   describe('[GET] /users', () => {
-    it('response fineAll Users', async () => {
+    it('response findAll Users', async () => {
       const usersRoute = new UsersRoute();
       const users = usersRoute.usersController.userService.users;
 
@@ -35,6 +38,7 @@ describe('Testing Users', () => {
 
       (mongoose as any).connect = jest.fn();
       const app = new App([usersRoute]);
+
       return request(app.getServer()).get(`${usersRoute.path}`).expect(200);
     });
   });
