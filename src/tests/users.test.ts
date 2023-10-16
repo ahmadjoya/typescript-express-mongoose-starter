@@ -5,11 +5,11 @@ import App from '@/app';
 import { CreateUserDto } from '@dtos/users.dto';
 import UsersRoute from '@routes/users.route';
 
+beforeAll(async () => {
+  jest.setTimeout(10000);
+});
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
-  jest.setTimeout(10000);
-  // (mongoose as any).disconnect = jest.fn();
-  jest.restoreAllMocks();
 });
 
 describe('Testing Users', () => {

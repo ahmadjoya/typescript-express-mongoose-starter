@@ -5,7 +5,7 @@ import express from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
-import { connect, set } from 'mongoose';
+import { connect, set, disconnect } from 'mongoose';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS } from '@config';
@@ -40,6 +40,15 @@ class App {
     });
   }
 
+  public async closeDatabaseConnection(): Promise<void> {
+    try {
+      await disconnect();
+      console.log('Disconnected from MongoDB');
+    } catch (error) {
+      console.error('Error closing database connection:', error);
+    }
+  }
+
   public getServer() {
     return this.app;
   }
@@ -49,12 +58,7 @@ class App {
       set('debug', true);
     }
 
-    try {
-      await connect(dbConnection.url);
-      console.log('Connected to MongoDB');
-    } catch (error) {
-      console.error('Error connecting to MongoDB:', error);
-    }
+    await connect(dbConnection.url);
   }
 
   private initializeMiddlewares() {
