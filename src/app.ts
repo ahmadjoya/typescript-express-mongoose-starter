@@ -1,3 +1,4 @@
+import http from 'http';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -18,47 +19,66 @@ class App {
   public app: express.Application;
   public env: string;
   public port: string | number;
+  private server?: http.Server;
 
   constructor(routes: Routes[]) {
     this.app = express();
     this.env = NODE_ENV || 'development';
     this.port = PORT || 3000;
 
-    this.connectToDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeSwagger();
     this.initializeErrorHandling();
   }
 
-  public listen() {
-    this.app.listen(this.port, () => {
+  public listen(): http.Server {
+    this.server = this.app.listen(this.port, () => {
       logger.info(`=================================`);
       logger.info(`======= ENV: ${this.env} =======`);
       logger.info(`🚀 App listening on the port ${this.port}`);
       logger.info(`=================================`);
     });
+
+    return this.server;
+  }
+
+  /**
+   * Connects to MongoDB. Awaited by the caller so a failed connection surfaces
+   * as a rejected promise instead of an unhandled rejection during construction.
+   */
+  public async connectToDatabase(): Promise<void> {
+    if (this.env === 'development') {
+      set('debug', true);
+    }
+
+    await connect(dbConnection.url, dbConnection.options);
+    logger.info(`✅ Connected to MongoDB`);
   }
 
   public async closeDatabaseConnection(): Promise<void> {
     try {
       await disconnect();
-      console.log('Disconnected from MongoDB');
+      logger.info('Disconnected from MongoDB');
     } catch (error) {
-      console.error('Error closing database connection:', error);
+      logger.error(`Error closing database connection: ${error}`);
     }
+  }
+
+  /** Closes the HTTP server and the database connection. */
+  public async close(): Promise<void> {
+    if (this.server) {
+      await new Promise<void>((resolve, reject) => {
+        this.server.close(error => (error ? reject(error) : resolve()));
+      });
+      this.server = undefined;
+    }
+
+    await this.closeDatabaseConnection();
   }
 
   public getServer() {
     return this.app;
-  }
-
-  private async connectToDatabase() {
-    if (this.env !== 'production') {
-      set('debug', true);
-    }
-
-    await connect(dbConnection.url);
   }
 
   private initializeMiddlewares() {
@@ -80,12 +100,14 @@ class App {
 
   private initializeSwagger() {
     const options = {
-      swaggerDefinition: {
+      definition: {
+        openapi: '3.0.0',
         info: {
           title: 'REST API',
           version: '1.0.0',
-          description: 'Example docs',
+          description: 'TypeScript Express Mongoose Starter API docs',
         },
+        servers: [{ url: `http://localhost:${PORT || 3000}`, description: 'Local development server' }],
       },
       apis: ['swagger.yaml'],
     };

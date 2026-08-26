@@ -1,0 +1,8 @@
+# Normalise line endings so Windows checkouts do not trip Prettier/ESLint (issue #6)
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary

@@ -1,32 +1,22 @@
 tags:
-- name: users
-  description: users API
+  - name: auth
+    description: authentication API
+  - name: users
+    description: users API
 
 paths:
-# [GET] users
-  /users:
-    get:
-      tags:
-      - users
-      summary: Find All Users
-      responses:
-        200:
-          description: 'OK'
-        500:
-          description: 'Server Error'
-
-# [POST] users
+  # [POST] signup
+  /signup:
     post:
       tags:
-      - users
-      summary: Add User
-      parameters:
-      - name: body
-        in: body
-        description: user Data
+        - auth
+      summary: Sign up a new user
+      requestBody:
         required: true
-        schema:
-          $ref: '#/definitions/users'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
       responses:
         201:
           description: 'Created'
@@ -37,44 +27,71 @@ paths:
         500:
           description: 'Server Error'
 
-# [GET] users/id
-  /users/{id}:
-    get:
+  # [POST] login
+  /login:
+    post:
       tags:
-      - users
-      summary: Find User By Id
-      parameters:
-      - name: id
-        in: path
-        description: User Id
+        - auth
+      summary: Log in and receive an Authorization cookie
+      requestBody:
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
       responses:
         200:
           description: 'OK'
-        409:
-          description: 'Conflict'
+        400:
+          description: 'Bad Request'
+        401:
+          description: 'Email or password is incorrect'
         500:
           description: 'Server Error'
 
-# [PUT] users/id
-    put:
+  # [POST] logout
+  /logout:
+    post:
       tags:
-      - users
-      summary: Update User By Id
-      parameters:
-      - name: id
-        in: path
-        description: user Id
-        required: true
-      - name: body
-        in: body
-        description: user Data
-        required: true
-        schema:
-          $ref: '#/definitions/users'
+        - auth
+      summary: Log out the current user
+      security:
+        - cookieAuth: []
+        - bearerAuth: []
       responses:
         200:
           description: 'OK'
+        401:
+          description: 'Unauthorized'
+        500:
+          description: 'Server Error'
+
+  # [GET] users
+  /users:
+    get:
+      tags:
+        - users
+      summary: Find All Users
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+    # [POST] users
+    post:
+      tags:
+        - users
+      summary: Add User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        201:
+          description: 'Created'
         400:
           description: 'Bad Request'
         409:
@@ -82,39 +99,101 @@ paths:
         500:
           description: 'Server Error'
 
-# [DELETE] users/id
-    delete:
+  # [GET] users/id
+  /users/{id}:
+    get:
       tags:
-      - users
-      summary: Delete User By Id
+        - users
+      summary: Find User By Id
       parameters:
-      - name: id
-        in: path
-        description: user Id
-        required: true
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: 'OK'
+        404:
+          description: 'Not Found'
+        500:
+          description: 'Server Error'
+
+    # [PUT] users/id
+    put:
+      tags:
+        - users
+      summary: Update User By Id
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        404:
+          description: 'Not Found'
         409:
           description: 'Conflict'
         500:
           description: 'Server Error'
 
-# definitions
-definitions:
-  users:
-    type: object
-    required:
+    # [DELETE] users/id
+    delete:
+      tags:
+        - users
+      summary: Delete User By Id
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+        404:
+          description: 'Not Found'
+        500:
+          description: 'Server Error'
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: Authorization
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      required:
         - email
         - password
-    properties:
-      email:
-        type: string
-        description: user Email
-      password:
-        type: string
-        description: user Password
-
-schemes:
- - https
- - http
+      properties:
+        email:
+          type: string
+          format: email
+          description: user Email
+          example: test@email.com
+        password:
+          type: string
+          format: password
+          description: user Password
+          example: q1w2e3r4!

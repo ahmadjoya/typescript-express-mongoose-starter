@@ -7,32 +7,50 @@
  * https://github.com/ahmadjoya/typescript-express-mongoose-starter
  *****************************************************************/
 const { execSync } = require('child_process');
+const { existsSync, rmSync } = require('fs');
+const { resolve } = require('path');
 
-const runCommand = command => {
+const REPO = 'https://github.com/ahmadjoya/typescript-express-mongoose-starter';
+const DEFAULT_NAME = 'typescript-express-mongoose-starter';
+
+const runCommand = (command, options = {}) => {
   try {
-    execSync(command, { stdio: 'inherit' });
+    execSync(command, { stdio: 'inherit', ...options });
     return true;
-  } catch (e) {
+  } catch {
     console.error(`Failed to execute ${command}`);
     return false;
   }
 };
 
-const defaultRepoName = 'typescript-express-mongoose-starter';
-const repoName = process.argv[2] || defaultRepoName;
+const repoName = process.argv[2] || DEFAULT_NAME;
 
-const gitCheckoutCommand = `git clone --depth 1 https://github.com/ahmadjoya/typescript-express-mongoose-starter ${repoName}`;
-const installDepsCommand = `cd ${repoName} && npm install`;
+if (!/^[a-zA-Z0-9._-]+$/.test(repoName)) {
+  console.error(`Invalid project name "${repoName}". Use letters, numbers, dots, dashes and underscores only.`);
+  process.exit(1);
+}
+
+const targetDir = resolve(process.cwd(), repoName);
+
+if (existsSync(targetDir)) {
+  console.error(`Directory "${repoName}" already exists. Choose another name or remove it first.`);
+  process.exit(1);
+}
 
 console.log(`Cloning ${repoName}`);
-const checkedOut = runCommand(gitCheckoutCommand);
-if (!checkedOut) process.exit(-1);
+if (!runCommand(`git clone --depth 1 ${REPO} ${repoName}`)) process.exit(1);
+
+// Drop the starter's history so the new project begins with a clean slate
+rmSync(resolve(targetDir, '.git'), { recursive: true, force: true });
 
 console.log(`Installing dependencies for ${repoName}`);
-const installedDeps = runCommand(installDepsCommand);
-if (!installedDeps) process.exit(-1);
+if (!runCommand('npm install', { cwd: targetDir })) process.exit(1);
 
-console.log(`Congratulations! You are ready. Follow the following command to start:`);
-console.log(`cd ${repoName}`);
-console.log(`Now Please add your database credentials in .env.development.local`);
-console.log(`Finally, npm run dev or npm start`);
+console.log(``);
+console.log(`Congratulations! You are ready. Follow the following commands to start:`);
+console.log(``);
+console.log(`  cd ${repoName}`);
+console.log(`  git init`);
+console.log(``);
+console.log(`Add your database credentials in .env.development.local (see .env.example),`);
+console.log(`then run: npm run dev`);

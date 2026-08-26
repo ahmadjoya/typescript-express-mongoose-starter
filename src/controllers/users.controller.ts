@@ -3,6 +3,9 @@ import { CreateUserDto } from '@dtos/users.dto';
 import { User } from '@interfaces/users.interface';
 import userService from '@services/users.service';
 
+/** Express 5 types params as `string | string[]`, so the id route params are declared explicitly. */
+type UserIdParams = { id: string };
+
 class UsersController {
   public userService = new userService();
 
@@ -16,7 +19,7 @@ class UsersController {
     }
   };
 
-  public getUserById = async (req: Request, res: Response, next: NextFunction) => {
+  public getUserById = async (req: Request<UserIdParams>, res: Response, next: NextFunction) => {
     try {
       const userId: string = req.params.id;
       const findOneUserData: User = await this.userService.findUserById(userId);
@@ -38,7 +41,7 @@ class UsersController {
     }
   };
 
-  public updateUser = async (req: Request, res: Response, next: NextFunction) => {
+  public updateUser = async (req: Request<UserIdParams>, res: Response, next: NextFunction) => {
     try {
       const userId: string = req.params.id;
       const userData: CreateUserDto = req.body;
@@ -50,7 +53,7 @@ class UsersController {
     }
   };
 
-  public deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+  public deleteUser = async (req: Request<UserIdParams>, res: Response, next: NextFunction) => {
     try {
       const userId: string = req.params.id;
       const deleteUserData: User = await this.userService.deleteUser(userId);

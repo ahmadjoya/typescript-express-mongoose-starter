@@ -44,13 +44,17 @@
       },
     },
   ],
+  /**
+   * Template for `pm2 deploy`. Replace every placeholder below with your own server
+   * details before running `pm2 deploy production setup && pm2 deploy production`.
+   */
   deploy: {
     production: {
-      user: 'user',
-      host: '0.0.0.0',
-      ref: 'origin/master',
-      repo: 'git@github.com:repo.git',
-      path: 'dist/server.js',
+      user: 'REPLACE_WITH_SSH_USER',
+      host: 'REPLACE_WITH_HOST',
+      ref: 'origin/main',
+      repo: 'REPLACE_WITH_GIT_REMOTE',
+      path: '/var/www/typescript-express-mongoose-starter',
       'post-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js --only prod',
     },
   },

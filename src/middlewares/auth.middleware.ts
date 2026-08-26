@@ -5,26 +5,40 @@ import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, RequestWithUser } from '@interfaces/auth.interface';
 import userModel from '@models/users.model';
 
+const getAuthorization = (req: RequestWithUser): string | null => {
+  const cookie = req.cookies?.['Authorization'];
+  if (cookie) return cookie;
+
+  const header = req.header('Authorization');
+  if (header?.startsWith('Bearer ')) return header.slice('Bearer '.length);
+
+  return null;
+};
+
 const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
-    const Authorization = req.cookies['Authorization'] || (req.header('Authorization') ? req.header('Authorization').split('Bearer ')[1] : null);
+    const Authorization = getAuthorization(req);
 
-    if (Authorization) {
-      const secretKey: string = SECRET_KEY;
-      const verificationResponse = (await verify(Authorization, secretKey)) as DataStoredInToken;
-      const userId = verificationResponse._id;
-      const findUser = await userModel.findById(userId);
-
-      if (findUser) {
-        req.user = findUser;
-        next();
-      } else {
-        next(new HttpException(401, 'Wrong authentication token'));
-      }
-    } else {
-      next(new HttpException(404, 'Authentication token missing'));
+    if (!Authorization) {
+      next(new HttpException(401, 'Authentication token missing'));
+      return;
     }
-  } catch (error) {
+
+    if (!SECRET_KEY) {
+      next(new HttpException(500, 'SECRET_KEY is not set'));
+      return;
+    }
+
+    const verificationResponse = verify(Authorization, SECRET_KEY) as DataStoredInToken;
+    const findUser = await userModel.findById(verificationResponse._id);
+
+    if (findUser) {
+      req.user = findUser;
+      next();
+    } else {
+      next(new HttpException(401, 'Wrong authentication token'));
+    }
+  } catch {
     next(new HttpException(401, 'Wrong authentication token'));
   }
 };

@@ -16,3 +16,16 @@ jest.config.js
 # docker
 Dockerfile
 docker-compose.yml
+
+# build output & logs
+/dist
+/logs
+/coverage
+
+# env
+.env.*.local
+
+# git
+.git
+.gitignore
+.github

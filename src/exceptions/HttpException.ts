@@ -1,10 +1,10 @@
 export class HttpException extends Error {
   public status: number;
-  public message: string;
 
   constructor(status: number, message: string) {
     super(message);
+    this.name = 'HttpException';
     this.status = status;
-    this.message = message;
+    Error.captureStackTrace?.(this, HttpException);
   }
 }
