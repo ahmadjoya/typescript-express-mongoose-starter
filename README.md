@@ -9,23 +9,17 @@
 
 <h4 align="center">🚀 Express RESTful API Boilerplate with TypeScript and Mongoose</h4>
 
-<p align ="center">
-  <a href="https://nodei.co/npm/typescript-express-mongoose-starter" target="_blank">
-    <img src="https://nodei.co/npm/typescript-express-mongoose-starter.png" alt="npm Info" />
-  </a>
-</p>
-
 <p align="center">
-  <a href="http://npm.im/typescript-express-mongoose-starter" target="_blank">
+  <a href="https://www.npmjs.com/package/typescript-express-mongoose-starter" target="_blank">
     <img src="https://img.shields.io/npm/v/typescript-express-mongoose-starter.svg" alt="npm Version" />
   </a>
-  <a href="http://npm.im/typescript-express-mongoose-starter" target="_blank">
+  <a href="https://www.npmjs.com/package/typescript-express-mongoose-starter" target="_blank">
     <img src="https://img.shields.io/github/v/release/ahmadjoya/typescript-express-mongoose-starter" alt="npm Release Version" />
   </a>
-  <a href="http://npm.im/typescript-express-mongoose-starter" target="_blank">
+  <a href="https://www.npmjs.com/package/typescript-express-mongoose-starter" target="_blank">
     <img src="https://img.shields.io/npm/dm/typescript-express-mongoose-starter.svg" alt="npm Downloads" />
   </a>
-  <a href="http://npm.im/typescript-express-mongoose-starter" target="_blank">
+  <a href="https://www.npmjs.com/package/typescript-express-mongoose-starter" target="_blank">
     <img src="https://img.shields.io/npm/l/typescript-express-mongoose-starter.svg" alt="npm Package License" />
   </a>
 </p>
@@ -187,11 +181,12 @@ $ docker build --target production-build-stage -t typescript-express .
 
 ## ⭐️ Stargazers
 
-[![Stargazers repo roster for @ahmdjoya/typescript-express-mongoose-starter](https://reporoster.com/stars/ahmadjoya/typescript-express-mongoose-starter)](https://github.com/ahmadjoya/typescript-express-mongoose-starter/stargazers)
+Thank you to everyone who has starred this project — see the full list on the [stargazers page](https://github.com/ahmadjoya/typescript-express-mongoose-starter/stargazers).
 
 ## 🍴 Forkers
 
-[![Forkers repo roster for @ahmadjoya/typescript-express-mongoose-starter](https://reporoster.com/forks/ahmadjoya/typescript-express-mongoose-starter)](https://github.com/ahmadjoya/typescript-express-mongoose-starter/network/members)
+Browse everyone building on top of this starter on the [forks page](https://github.com/ahmadjoya/typescript-express-mongoose-starter/network/members).
+
 ## Contributions
 
 Contributions, bug reports, and feature requests are always welcome! If you encounter any issues or have ideas to improve the starter template, please feel free to open an issue or submit a pull request on the [GitHub repository](https://github.com/ahmadjoya/typescript-express-mongoose-starter).
